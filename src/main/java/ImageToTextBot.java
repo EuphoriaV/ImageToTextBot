@@ -178,7 +178,7 @@ public class ImageToTextBot extends TelegramLongPollingBot {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String[] bright = {"1", "=", "0", "$"};
+        String[] bright = {"÷", "1", "0", "$"};
         if (good) {
             bright = new String[]{"@", "$", "#", "*", "!", "=", ";", ":", "~", "-", ",", ".", " "};
         }
