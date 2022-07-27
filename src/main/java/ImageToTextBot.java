@@ -38,13 +38,15 @@ public class ImageToTextBot extends TelegramLongPollingBot {
             }
         }
         if (curUser == null) {
-            curUser = new MyUser(userName, chatId);
+            curUser = new MyUser(userName);
             users.add(curUser);
         }
         if (update.getMessage().hasText()) {
             String command = update.getMessage().getText().toLowerCase(Locale.ROOT);
             if (command.equals("/start")) {
-                sendText(chatId, "Привет, я могу превратить твое изображение в текст. Могу, чтобы это выглядело красиво в самом телеграмме. Могу скинуть в виде файла с любым разрешением.");
+                sendText(chatId, "Привет, я могу превратить твое изображение в текст. " +
+                        "Могу, чтобы это выглядело красиво в самом телеграмме. " +
+                        "Могу скинуть в виде файла с любым разрешением.");
                 return;
             }
             if (command.equals("/sendtext")) {
@@ -52,8 +54,12 @@ public class ImageToTextBot extends TelegramLongPollingBot {
                 curUser.setWaitingForPhoto(1);
                 return;
             } else if (command.equals("/sendfile")) {
-                sendText(chatId, "Итак, вам надо написать разрешение в формате: \"width x height y\" или \"width x\" или \"height x\"");
-                sendText(chatId, "Таким образом, если вы укажете размер обеих сторон в сиволах, то изображение может стать кривым. Если же вы укажете только одну из сторон, то вторая сторона посчитается с сохранением отношения сторон.");
+                sendText(chatId, "Итак, вам надо написать разрешение в формате: " +
+                        "\"width x height y\" или \"width x\" или \"height x\"");
+                sendText(chatId, "Таким образом, если вы укажете размер обеих сторон в сиволах, " +
+                        "то изображение может стать кривым. " +
+                        "Если же вы укажете только одну из сторон, " +
+                        "то вторая сторона посчитается с сохранением отношения сторон.");
                 curUser.setWaitingForPhoto(2);
                 return;
             } else if (curUser.getWaitingForPhoto() == 2) {
@@ -96,8 +102,11 @@ public class ImageToTextBot extends TelegramLongPollingBot {
                     }
                 }
                 if (curUser.getCurHeight() == 0 && curUser.getCurWidth() == 0) {
-                    sendText(chatId, "Итак, вам надо написать разрешение в формате: \"width x height y\" или \"width x\" или \"height x\"");
-                    sendText(chatId, "Таким образом, если вы укажете размер обеих сторон в сиволах, то изображение может стать кривым. Если же вы укажете только одну из сторон, то вторая сторона посчитается с сохранением отношения сторон");
+                    sendText(chatId, "Итак, вам надо написать разрешение в формате: " +
+                            "\"width x height y\" или \"width x\" или \"height x\"");
+                    sendText(chatId, "Таким образом, если вы укажете размер обеих сторон в сиволах," +
+                            " то изображение может стать кривым. Если же вы укажете только одну из сторон," +
+                            " то вторая сторона посчитается с сохранением отношения сторон");
                     return;
                 }
                 sendText(chatId, "Кидай фото");
@@ -195,8 +204,9 @@ public class ImageToTextBot extends TelegramLongPollingBot {
                 blue[y][x] = color.getBlue();
             }
         }
-        double pixelWidth = 11.0, pixelHeight = 23.0;
-        double width = bufferedImage.getWidth(), height = bufferedImage.getHeight(), widthChar = 57.0, heightChar = (height / width) * widthChar * (pixelWidth / pixelHeight);
+        double pixelWidth = 1.0, pixelHeight = 3.0;
+        double width = bufferedImage.getWidth(), height = bufferedImage.getHeight(), widthChar = 57.0,
+                heightChar = (height / width) * widthChar * (pixelWidth / pixelHeight);
         if (good) {
             width = bufferedImage.getWidth();
             height = bufferedImage.getHeight();
@@ -214,7 +224,9 @@ public class ImageToTextBot extends TelegramLongPollingBot {
         double dx = width / widthChar, dy = height / heightChar;
         for (int i = 0; i < heightChar; i++) {
             for (int j = 0; j < widthChar; j++) {
-                double dist = Math.sqrt(red[(int) (i * dy)][(int) (j * dx)] * red[(int) (i * dy)][(int) (j * dx)] + green[(int) (i * dy)][(int) (j * dx)] * green[(int) (i * dy)][(int) (j * dx)] + blue[(int) (i * dy)][(int) (j * dx)] * blue[(int) (i * dy)][(int) (j * dx)]);
+                double dist = Math.sqrt(red[(int) (i * dy)][(int) (j * dx)] * red[(int) (i * dy)][(int) (j * dx)]
+                        + green[(int) (i * dy)][(int) (j * dx)] * green[(int) (i * dy)][(int) (j * dx)]
+                        + blue[(int) (i * dy)][(int) (j * dx)] * blue[(int) (i * dy)][(int) (j * dx)]);
                 double coeff = (dist / 442.0);
                 ans.append(bright[(int) (bright.length * coeff)]);
             }

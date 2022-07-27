@@ -3,11 +3,9 @@ public class MyUser {
     private int curHeight = 0;
     private int curWidth = 0;
     private final String userName;
-    private final String chatId;
 
-    public MyUser(String name, String id) {
+    public MyUser(String name) {
         userName = name;
-        chatId = id;
     }
 
     public int getWaitingForPhoto() {
@@ -36,9 +34,5 @@ public class MyUser {
 
     public String getUserName() {
         return userName;
-    }
-
-    public String getChatId() {
-        return chatId;
     }
 }
