@@ -204,7 +204,11 @@ public class ImageToTextBot extends TelegramLongPollingBot {
                 blue[y][x] = color.getBlue();
             }
         }
-        double pixelWidth = 1.0, pixelHeight = 3.0;
+        double pixelWidth = 4.0, pixelHeight = 9.0;
+        if (good) {
+            pixelWidth = 1.0;
+            pixelHeight = 3.0;
+        }
         double width = bufferedImage.getWidth(), height = bufferedImage.getHeight(), widthChar = 57.0,
                 heightChar = (height / width) * widthChar * (pixelWidth / pixelHeight);
         if (good) {
